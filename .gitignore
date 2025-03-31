@@ -1,0 +1,28 @@
+# Java build files
+*.class
+
+# Eclipse
+*.log
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.project
+.classpath
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+target/
+
+# VS Code
+.vscode/
+
+# Mac OS
+.DS_Store

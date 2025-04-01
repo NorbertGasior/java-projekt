@@ -29,30 +29,33 @@ import javax.swing.event.ChangeListener;
 
 public class mainframe extends JFrame implements ChangeListener{
 	JPanel panelsrodkowy, nameInputPanel,centerPanel;
+	
 	CardLayout nameInputLayout;
-    int minuta,sekunda = 0,inkrement; //czas
+	
+    static int minuta = 5,sekunda = 0,inkrement; //czas
     int wyborpartii;
-    String nazwa1, nazwa2;
+    
+    static String nazwa1, nazwa2;
+    JTextField textfield1, textfield2, textfieldai;
+    
 	JMenuBar menubar;
 	JMenu rodzajpartii, wybormotywu,tempo;
 	JMenuItem normalchess_1,fischerchess_1,capablancachess_1; //wybory w rodzaju partii
     JMenuItem temp1p0_2,temp1p2_2,temp3p0_2,temp3p2_2,temp5p0_2,temp10p0_2,temp15p0_2,temp30p0_2,tempnotstand_2; //wybory w tempie
     JMenuItem classic_3,wooden_3,thirdstyle_3; //wybory w motywie
-    JTextField textfield1, textfield2, textfieldai;
+    
     public mainframe() {
         setTitle("Szachy");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
         setLayout(new BorderLayout());
-        setinterfejs();
+        this.setinterfejs();
         setVisible(true);
     }
 	public void setinterfejs() {
         this.setSize(1000,1000);
 		
 		
-		 GridBagConstraints gbc = new GridBagConstraints();
-		 gbc.insets = new Insets(5, 5, 5, 5);
+		
 		panelsrodkowy = new JPanel();
 		centerPanel = new JPanel(new GridBagLayout());
 		menubar = new JMenuBar();
@@ -201,6 +204,9 @@ public class mainframe extends JFrame implements ChangeListener{
         panelsrodkowy.add(button);
         this.add(panelsrodkowy,BorderLayout.NORTH);
     	nameInputLayout.show(nameInputPanel, "twoPlayers");
+    	
+    	GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
     	gbc.gridx = 0;
         gbc.gridy = 0;
         centerPanel.add(nameInputPanel, gbc);
@@ -214,6 +220,14 @@ public class mainframe extends JFrame implements ChangeListener{
         JButton startButton = new JButton("GRAJ");
         startButton.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e -> {
+        	if(opcja1Wlaczona[0]==false) {
+        		nazwa1 = "AI";
+        		nazwa2 = textfieldai.getText();
+        	}
+        	else if(opcja1Wlaczona[0]==true) {
+        	nazwa1 = textfield1.getText();
+            nazwa2 = textfield2.getText();
+        	}
             new ChessBoardWindow();
             dispose();
         });
@@ -222,22 +236,37 @@ public class mainframe extends JFrame implements ChangeListener{
         this.setJMenuBar(menubar);
 	}
   
-	public String getNazwa1() {
+	static public int getMinuta() {
+		return minuta;
+	}
+	public void setMinuta(int minuta) {
+		this.minuta = minuta;
+	}
+	static public int getSekunda() {
+		return sekunda;
+	}
+	public void setSekunda(int sekunda) {
+		this.sekunda = sekunda;
+	}
+	static public int getInkrement() {
+		return inkrement;
+	}
+	public void setInkrement(int inkrement) {
+		this.inkrement = inkrement;
+	}
+	static public String getNazwa1() {
 		return nazwa1;
 	}
 	public void setNazwa1(String nazwa1) {
 		this.nazwa1 = nazwa1;
 	}
-	public String getNazwa2() {
+	static public String getNazwa2() {
 		return nazwa2;
 	}
 	public void setNazwa2(String nazwa2) {
 		this.nazwa2 = nazwa2;
 	}
-	public static void main(String[] args){
-        
-        SwingUtilities.invokeLater(mainframe::new);
-    }
+	
     private static void updateButton(JButton button, boolean opcja1Wlaczona) {
     	
         if (opcja1Wlaczona) {
@@ -253,4 +282,8 @@ public class mainframe extends JFrame implements ChangeListener{
 		// TODO Auto-generated method stub
 		
 	}
+	public static void main(String[] args){
+	        
+	        SwingUtilities.invokeLater(mainframe::new);
+	    }
 }

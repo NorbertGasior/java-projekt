@@ -14,5 +14,5 @@ public class Rook extends Pieces{
 		this.name = "Knight";
 		this.sprite = sheet.getSubimage(4*sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
-
+//dgsgsfg
 }

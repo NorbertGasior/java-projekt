@@ -20,6 +20,7 @@ public class Gameboard extends JPanel {
     ArrayList<Pieces> pieceslist = new ArrayList<>();
     Load load = new Load(this);
     Gamelogic logic = new Gamelogic(this);
+    public int Enpassant = -1;
     public Gameboard(GameSettings settings) {
         this.settings = settings;
         this.setPreferredSize(new Dimension(settings.getColumns() * SizeofTile, settings.getRows() * SizeofTile));
@@ -49,6 +50,9 @@ public class Gameboard extends JPanel {
     		}
     	}
     	return null;
+    }
+    public int getTileValue(int col, int row) {
+    	return row * rows + col;
     }
     private void addPieces() {
         pieceslist.clear();

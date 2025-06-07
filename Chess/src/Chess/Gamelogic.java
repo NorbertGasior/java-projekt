@@ -28,6 +28,9 @@ public class Gamelogic {
     }
 
     public void makeMove(Move move) {
+    	if(move.piece.name.equals("Pawn")) {
+    		MakePawnMove(move);
+    	}else {
         move.piece.columns = move.newcolumns;
         move.piece.rows = move.newrows;
         move.piece.xPos = move.newcolumns * gameboard.SizeofTile;
@@ -36,9 +39,34 @@ public class Gamelogic {
         else previousMove = false;
         capture(move);
         move.piece.alreadymoved=true;
+    	}
     }
 
-    public void capture(Move move) {
+    private void MakePawnMove(Move move) {
+    	
+    	int Colorindex = move.piece.isWhite ? 1 : -1;
+    	if(gameboard.getTileValue(move.newcolumns, move.newrows)==gameboard.Enpassant) {
+    		move.captured = gameboard.getPiece(move.newcolumns, move.newrows + Colorindex);
+    	}
+    	if(Math.abs(move.piece.rows-move.newrows)==2) {
+    		gameboard.Enpassant = gameboard.getTileValue(move.newcolumns, move.newrows+Colorindex);
+    	}else {
+    		gameboard.Enpassant=-1;
+    	}
+    	
+    	
+    	 move.piece.columns = move.newcolumns;
+         move.piece.rows = move.newrows;
+         move.piece.xPos = move.newcolumns * gameboard.SizeofTile;
+         move.piece.yPos = move.newrows * gameboard.SizeofTile;
+         if(previousMove == false)previousMove = true;
+         else previousMove = false;
+         capture(move);
+         move.piece.alreadymoved=true;
+         System.out.println(gameboard.Enpassant + "\n");
+		
+	}
+	public void capture(Move move) {
     	
         gameboard.pieceslist.remove(move.captured);
     }
@@ -47,14 +75,6 @@ public class Gamelogic {
         if (p1 == null || p2 == null) return false;
         return p1.isWhite == p2.isWhite;
     }
-    public boolean isbetween(Move move,Gameboard gameboard) {
-    	if(move.piece.name == "Pawn" && Math.abs(move.newrows-move.oldrows)==2) {
-    		int row = Math.min(move.newrows, move.oldrows);
-    		if(gameboard.getPiece(move.oldcolumns, row+1)!=null) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
+    
     
 }

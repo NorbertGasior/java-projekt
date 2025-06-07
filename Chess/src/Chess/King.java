@@ -14,5 +14,7 @@ public class King extends Pieces{
 		this.name = "King";
 		this.sprite = sheet.getSubimage(0, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
-
+	public boolean PiececanMove(int columns,int rows) {
+		return (Math.abs(columns-this.columns)<2 && Math.abs(rows-this.rows)<2);
+	}
 }

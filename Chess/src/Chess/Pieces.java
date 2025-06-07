@@ -13,6 +13,7 @@ public class Pieces {
 	public boolean isWhite;
 	public String name;
 	public int value;
+	public boolean alreadymoved=false;
 	BufferedImage sheet;
 	{
 		try {
@@ -30,6 +31,12 @@ public class Pieces {
 	Gameboard gameboard;
 	public Pieces(Gameboard gameboard) {
 		this.gameboard = gameboard;
+	}
+	public boolean PiececanMove(int column, int row) {
+		return true;
+	}
+	public boolean isbetween(int column, int row) {
+		return false;
 	}
 	public void paint(Graphics2D g2d) {
 		g2d.drawImage(sprite, xPos, yPos, null); 

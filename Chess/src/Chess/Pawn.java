@@ -14,5 +14,7 @@ public class Pawn extends Pieces{
 		this.name = "Pawn";
 		this.sprite = sheet.getSubimage(5*sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
-
+	public boolean PiececanMove(int columns, int rows) {
+		return true;
+	}
 }

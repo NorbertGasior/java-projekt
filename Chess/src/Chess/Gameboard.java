@@ -166,9 +166,20 @@ public class Gameboard extends JPanel {
                 g2d.fillRect(c * SizeofTile, r * SizeofTile, SizeofTile, SizeofTile);
             }
         }
+        if(selectedPiece!=null) {
+	        for (int r = 0; r < rows; r++) {
+	            for (int c = 0; c < columns; c++) {
+	            	if(logic.isValidMove(new Move(this,selectedPiece,c,r))) {
+	            		g2d.setColor(Color.darkGray);
+	            		g2d.fillOval(c*SizeofTile+32, r*SizeofTile+32, SizeofTile/5, SizeofTile/5);
+	            	}
+	            }
+	        }
+        }
         for (Pieces piece : pieceslist) {
             piece.paint(g2d);
         }
+        
     }
     
 }

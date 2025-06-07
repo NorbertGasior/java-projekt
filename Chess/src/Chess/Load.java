@@ -42,8 +42,9 @@ public class Load extends MouseAdapter{
 		}
 		gameboard.selectedPiece = null;
 		gameboard.repaint();
+		
 	}
-
+	
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {

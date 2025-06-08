@@ -8,12 +8,13 @@ public class ChessBoardWindow extends JFrame {
 	private JPanel name1, name2;
 	String user1, user2, minutes, seconds;
 	int min, sec;
+	private ChessClock clock;
 
 //chyba git funkcja
 	public ChessBoardWindow(GameSettings settings) {
 		setTitle("Plansza szachowa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(1500, 1200));
+		setMinimumSize(new Dimension(1000, 1000));
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		name1 = new JPanel();
@@ -21,6 +22,18 @@ public class ChessBoardWindow extends JFrame {
 		name2 = new JPanel();
 		name2.setSize(new Dimension(100,50));
 		Gameboard board = new Gameboard(settings);
+		
+		// utwórz i dodaj zegar
+		clock = new ChessClock(settings);
+		c.gridx = 1;       // drugi słupek obok planszy
+		c.gridy = 50;      // obok tej samej wysokości planszy
+		this.add(clock, c);
+
+		// ustaw, żeby zegar wystartował
+		clock.start();
+
+		// podłącz zegar do logiki gry, żeby przełączał się po każdym ruchu:
+		board.logic.setClock(clock);
 
 		showname(settings);
 		c.gridx = 0;

@@ -31,7 +31,7 @@ public class MenuFrame extends JFrame implements ChangeListener {
 	}
 
 	public void setinterfejs() {
-		this.setSize(1000, 1000);
+		this.setSize(800, 800);
 		panelsrodkowy = new JPanel();
 		centerPanel = new JPanel(new GridBagLayout());
 		JButton button = new JButton();

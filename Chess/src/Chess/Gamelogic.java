@@ -91,6 +91,10 @@ public class Gamelogic {
     		}
     		rook.xPos=rook.columns*gameboard.SizeofTile;
     	}
+    	// sterowanie zegarem
+        if (clock != null) {
+            clock.switchTurn();
+        }
     }
     private void MakePawnMove(Move move) {
     	
@@ -178,5 +182,10 @@ public class Gamelogic {
         return p1.isWhite == p2.isWhite;
     }
     
+    private ChessClock clock;
+
+    public void setClock(ChessClock clock) {
+        this.clock = clock;
+    }
     
 }

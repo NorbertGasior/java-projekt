@@ -41,6 +41,7 @@ public class Load extends MouseAdapter{
 			}
 		}
 		gameboard.selectedPiece = null;
+		
 		gameboard.repaint();
 		
 	}
@@ -51,6 +52,7 @@ public class Load extends MouseAdapter{
 		if(gameboard.selectedPiece != null) {
 			gameboard.selectedPiece.xPos = e.getX() - gameboard.SizeofTile/2;
 			gameboard.selectedPiece.yPos = e.getY() - gameboard.SizeofTile/2;
+			
 			gameboard.repaint();
 		}
 		

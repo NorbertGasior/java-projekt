@@ -23,6 +23,7 @@ public class Gameboard extends JPanel {
     Load load = new Load(this);
     Gamelogic logic = new Gamelogic(this);
     public int Enpassant = -1;
+    public boolean chessboardrotated =false;
     public Gameboard(GameSettings settings) {
         this.settings = settings;
         this.setPreferredSize(new Dimension(settings.getColumns() * SizeofTile, settings.getRows() * SizeofTile));
@@ -162,7 +163,36 @@ public class Gameboard extends JPanel {
             }
         }
     }
-
+    public void rotatechessboard() {
+    	int rotcol=0;
+    	int rotrow=0;
+    	for(Pieces piece : pieceslist) {
+    		if(piece.columns<4) {
+    			rotcol = piece.columns+(int) (2*Math.abs(piece.columns - 3.5));
+    			if(piece.rows<4) {
+        			rotrow = piece.rows+(int) (2*Math.abs(piece.rows - 3.5));
+        			
+        		}else if(piece.rows>3) {
+        			rotrow = piece.rows-(int) (2*Math.abs(piece.rows - 3.5));
+        		}
+    		}else if(piece.columns>3) {
+    			rotcol = piece.columns-(int) (2*Math.abs(piece.columns - 3.5));
+    			if(piece.rows<4) {
+    				rotrow = piece.rows+(int) (2*Math.abs(piece.rows - 3.5));
+        			
+        		}else if(piece.rows>3) {
+        			rotrow = piece.rows-(int) (2*Math.abs(piece.rows - 3.5));
+        		}
+    		}
+    		piece.columns = rotcol;
+    		piece.rows = rotrow;
+    		piece.xPos = piece.columns * SizeofTile;
+            piece.yPos = piece.rows * SizeofTile;
+            
+    	}
+    	
+    	chessboardrotated = !chessboardrotated;
+    }
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;

@@ -28,12 +28,14 @@ public class Gamelogic {
         	return false;
         }
         if(!move.piece.PiececanMove(move.newcolumns, move.newrows)) {
+        	
         	return false;
         }
         if(move.piece.isbetween(move.newcolumns, move.newrows)) {
         	return false;
         }
         if(checkscanner.isKingchecked(move)) {
+        	
         	ifkingchecked = true;
         	return false;
         }
@@ -77,6 +79,7 @@ public class Gamelogic {
     	
     	
     	move.piece.isFirstmove=false;
+    	gameboard.rotatechessboard();
     }
     
     private void MakeKingMove(Move move) {

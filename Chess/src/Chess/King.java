@@ -15,6 +15,27 @@ public class King extends Pieces{
 		this.sprite = sheet.getSubimage(0, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
 	public boolean PiececanMove(int columns,int rows) {
-		return (Math.abs(columns-this.columns)<2 && Math.abs(rows-this.rows)<2);
+		return canCastle(columns,rows)||(Math.abs(columns-this.columns)<2 && Math.abs(rows-this.rows)<2);
+	}
+	public boolean canCastle(int col, int row) {
+		if(this.rows==row) {
+			if(col == 6) {
+				Pieces rook = gameboard.getPiece(7, row);
+				if(rook !=null && rook.isFirstmove && isFirstmove){
+					return  gameboard.getPiece(5, row) == null &&
+							gameboard.getPiece(6, row) == null &&
+							!gameboard.logic.checkscanner.isKingchecked(new Move(gameboard, this, 5, row));
+				}
+			}else if(col == 2) {
+				Pieces rook = gameboard.getPiece(0, row);
+				if(rook !=null && rook.isFirstmove && isFirstmove){
+					return  gameboard.getPiece(3, row) == null &&
+							gameboard.getPiece(2, row) == null &&
+							gameboard.getPiece(1, row) == null &&
+							!gameboard.logic.checkscanner.isKingchecked(new Move(gameboard, this, 3, row));
+				}
+			}
+		}
+		return false;
 	}
 }

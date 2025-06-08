@@ -55,7 +55,9 @@ public class Gamelogic {
     		char s = move.Movenotation[move.newcolumns];
     		System.out.println(s +""+(8- move.newrows));
     		
-    	}else {
+    	}else if(move.piece.name.equals("King")){
+    		MakeKingMove(move);
+    	}
     	if(move.piece.name.equals("Knight"))s='N';
     	else if(move.piece.name.equals("King"))s='K';
     	else if(move.piece.name.equals("Queen"))s='Q';
@@ -72,12 +74,24 @@ public class Gamelogic {
         else previousMove = false;
         capture(move);
         move.piece.alreadymoved=true;
-    	}
-    	ifkingchecked = false;
     	
+    	
+    	move.piece.isFirstmove=false;
     }
     
-
+    private void MakeKingMove(Move move) {
+    	if(Math.abs(move.piece.columns- move.newcolumns)==2) {
+    		Pieces rook;
+    		if(move.piece.columns < move.newcolumns) {
+    			rook = gameboard.getPiece(7,move.piece.rows);
+    			rook.columns = 5;
+    		}else {
+    			rook = gameboard.getPiece(0,move.piece.rows);
+    			rook.columns = 3;
+    		}
+    		rook.xPos=rook.columns*gameboard.SizeofTile;
+    	}
+    }
     private void MakePawnMove(Move move) {
     	
     	int Colorindex = move.piece.isWhite ? 1 : -1;
@@ -150,16 +164,9 @@ public class Gamelogic {
             }
             
     	}
-    	 move.piece.columns = move.newcolumns;
-         move.piece.rows = move.newrows;
-         move.piece.xPos = move.newcolumns * gameboard.SizeofTile;
-         move.piece.yPos = move.newrows * gameboard.SizeofTile;
-         if(previousMove == false)previousMove = true;
-         else previousMove = false;
+    	 
          capture(move);
          move.piece.alreadymoved=true;
-         
-		
 	}
 	public void capture(Move move) {
     	

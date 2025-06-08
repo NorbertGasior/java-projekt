@@ -14,6 +14,7 @@ public class Pieces {
 	public String name;
 	public int count;
 	public boolean alreadymoved=false;
+	public boolean isFirstmove =true;
 	BufferedImage sheet;
 	{
 		try {

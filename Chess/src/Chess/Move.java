@@ -17,5 +17,4 @@ public class Move {
 		this.piece = piece;
 		this.captured = gameboard.getPiece(newcol, newrow);
 	}
-
 }

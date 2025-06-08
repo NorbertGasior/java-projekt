@@ -55,8 +55,5 @@ public class Load extends MouseAdapter{
 		}
 		
 		
-	}
-
-	
-
+	}	
 }

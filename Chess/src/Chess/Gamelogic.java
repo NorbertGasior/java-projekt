@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class Gamelogic {
 	
     private Gameboard gameboard;
-    private boolean previousMove=false;
+    public boolean previousMove=false;
     Checkscanner checkscanner;
     public boolean ifkingchecked = false;
     char s;
@@ -79,7 +79,7 @@ public class Gamelogic {
     	
     	
     	move.piece.isFirstmove=false;
-    	gameboard.rotatechessboard();
+    	//gameboard.rotatechessboard();
     }
     
     private void MakeKingMove(Move move) {

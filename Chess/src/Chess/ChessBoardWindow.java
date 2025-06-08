@@ -9,7 +9,7 @@ public class ChessBoardWindow extends JFrame {
 	String user1, user2, minutes, seconds;
 	int min, sec;
 	private ChessClock clock;
-
+	
 //chyba git funkcja
 	public ChessBoardWindow(GameSettings settings) {
 		setTitle("Plansza szachowa");
@@ -24,7 +24,7 @@ public class ChessBoardWindow extends JFrame {
 		Gameboard board = new Gameboard(settings);
 		
 		// utwórz i dodaj zegar
-		clock = new ChessClock(settings);
+		clock = new ChessClock(board);
 		c.gridx = 1;       // drugi słupek obok planszy
 		c.gridy = 50;      // obok tej samej wysokości planszy
 		this.add(clock, c);

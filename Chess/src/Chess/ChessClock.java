@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 public class ChessClock extends JPanel {
     private final int initialTime;   // czas początkowy w sekundach
     private final int increment;     // inkrementacja w sekundach
-
+    
     private int timeWhite;           // pozostały czas białych
     private int timeBlack;           // pozostały czas czarnych
     private boolean whiteTurn = true;
@@ -20,9 +20,9 @@ public class ChessClock extends JPanel {
     private final JLabel labelBlack;
     private Timer timer;
 
-    public ChessClock(GameSettings settings) {
-        this.initialTime = settings.getMinutes() * 60;
-        this.increment   = settings.getIncrement();
+    public ChessClock(Gameboard board) {
+        this.initialTime = board.settings.getMinutes() * 60;
+        this.increment   = board.settings.getIncrement();
         this.timeWhite   = initialTime;
         this.timeBlack   = initialTime;
 
@@ -38,7 +38,7 @@ public class ChessClock extends JPanel {
 
         // Timer co sekundę
         timer = new Timer(1000, (ActionEvent e) -> {
-            if (whiteTurn) {
+            if (!board.logic.previousMove) {
                 timeWhite--;
                 if (timeWhite <= 0) {
                     timer.stop();

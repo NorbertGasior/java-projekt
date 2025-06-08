@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 public class MenuFrame extends JFrame implements ChangeListener {
 	JPanel panelsrodkowy, nameInputPanel, centerPanel;
 	GameSettings settings = new GameSettings();
+	
 	CardLayout nameInputLayout;
 	JTextField textfield1, textfield2, textfieldai;
 

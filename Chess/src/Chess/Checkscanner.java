@@ -115,4 +115,8 @@ public class Checkscanner {
 	private boolean checkedbyPawn(Pieces p, Pieces k, int col, int row) {
 		return p!=null && !logic.sameTeam(p, k) && p.name.equals("Pawn");
 	}
+	
+	public boolean GameisOver(Pieces king) {
+		return false;
+	}
 }

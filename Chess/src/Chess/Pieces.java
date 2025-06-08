@@ -12,7 +12,7 @@ public class Pieces {
 	public int xPos, yPos;
 	public boolean isWhite;
 	public String name;
-	public int value;
+	public int count;
 	public boolean alreadymoved=false;
 	BufferedImage sheet;
 	{

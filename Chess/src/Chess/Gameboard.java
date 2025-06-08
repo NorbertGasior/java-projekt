@@ -1,7 +1,9 @@
 package Chess;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -175,7 +177,14 @@ public class Gameboard extends JPanel {
 	            for (int c = 0; c < columns; c++) {
 	            	if(logic.isValidMove(new Move(this,selectedPiece,c,r))) {
 	            		g2d.setColor(Color.darkGray);
-	            		g2d.fillOval(c*SizeofTile+32, r*SizeofTile+32, SizeofTile/5, SizeofTile/5);
+	            		if(getPiece(c,r)!=null) {
+	            			g2d.setStroke(new BasicStroke(5));
+	            			g2d.drawOval(c*SizeofTile+2, r*SizeofTile+2, SizeofTile-4, SizeofTile-4);
+	            			
+	            		}
+	            		if(getPiece(c,r)==null) {
+	            			g2d.fillOval(c*SizeofTile+32, r*SizeofTile+32, SizeofTile/5, SizeofTile/5);
+	            		}
 	            	}
 	            }
 	        }

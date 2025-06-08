@@ -3,7 +3,7 @@ package Chess;
 import java.awt.image.BufferedImage;
 
 public class Queen extends Pieces{
-
+	
 	public Queen(Gameboard gameboard, int rows, int columns, boolean isWhite) {
 		super(gameboard);
 		this.rows = rows;

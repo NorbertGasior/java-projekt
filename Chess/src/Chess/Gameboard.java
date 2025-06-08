@@ -14,11 +14,11 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 public class Gameboard extends JPanel {
-    private GameSettings settings;
+    public GameSettings settings;
     public int SizeofTile = 80;
-    private int rows;
-    private int columns;
-    private Color c1, c2;
+    public int rows;
+    public int columns;
+    public Color c1, c2;
     ArrayList<Pieces> pieceslist = new ArrayList<>();
     Load load = new Load(this);
     Gamelogic logic = new Gamelogic(this);
@@ -186,6 +186,7 @@ public class Gameboard extends JPanel {
 	            			g2d.fillOval(c*SizeofTile+32, r*SizeofTile+32, SizeofTile/5, SizeofTile/5);
 	            		}
 	            	}
+	            	
 	            }
 	        }
         }

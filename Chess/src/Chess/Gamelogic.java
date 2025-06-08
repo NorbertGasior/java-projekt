@@ -9,14 +9,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class Gamelogic {
+	
     private Gameboard gameboard;
     private boolean previousMove=false;
-    
-    
+    Checkscanner checkscanner;
+    public boolean ifkingchecked = false;
     char s;
     String full = "";
     public Gamelogic(Gameboard gameboard) {
         this.gameboard = gameboard;
+        checkscanner= new Checkscanner(gameboard, this);
     }
     public boolean isValidMove(Move move) {
         if (sameTeam(move.piece, move.captured)) {
@@ -31,9 +33,22 @@ public class Gamelogic {
         if(move.piece.isbetween(move.newcolumns, move.newrows)) {
         	return false;
         }
+        if(checkscanner.isKingchecked(move)) {
+        	ifkingchecked = true;
+        	return false;
+        }
         return true;   
     }
-
+    
+    Pieces findKing(boolean isWhite) {
+    	for (Pieces piece : gameboard.pieceslist) {
+    		if(isWhite == piece.isWhite && piece.name.equals("King")) {
+    			return piece;
+    		}
+    	}
+    	return null;
+    }
+    
     public void makeMove(Move move) {
     	if(move.piece.name.equals("Pawn")) {
     		MakePawnMove(move);
@@ -58,6 +73,8 @@ public class Gamelogic {
         capture(move);
         move.piece.alreadymoved=true;
     	}
+    	ifkingchecked = false;
+    	
     }
     
 
@@ -149,7 +166,7 @@ public class Gamelogic {
         gameboard.pieceslist.remove(move.captured);
     }
 
-    private boolean sameTeam(Pieces p1, Pieces p2) {
+    public boolean sameTeam(Pieces p1, Pieces p2) {
         if (p1 == null || p2 == null) return false;
         return p1.isWhite == p2.isWhite;
     }

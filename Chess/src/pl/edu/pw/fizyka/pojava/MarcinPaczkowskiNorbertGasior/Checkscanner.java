@@ -1,4 +1,7 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Checkscanner {
 	Gameboard gameboard;
@@ -21,15 +24,15 @@ public class Checkscanner {
 			Kingrow = move.newrows;
 		}
 		
-		return  hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,0,1)|| //up
-				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,0)|| //right
-				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,0,-1)|| //down
-				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,0)|| // left
+		return  hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,0,1)|| 
+				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,0)|| 
+				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,0,-1)|| 
+				hitbyRook(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,0)|| 
 				
-				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,-1)|| // up left
-				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,1)|| //down left
-				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,1)|| //down right
-				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,-1)|| //up right
+				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,-1)|| 
+				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,-1,1)|| 
+				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,1)|| 
+				hitbyBishop(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow,1,-1)|| 
 				
 				hitbyKnight(move.newcolumns,move.newrows,king,Kingcolumn,Kingrow)||
 				
@@ -59,7 +62,7 @@ public class Checkscanner {
 	
 	private boolean hitbyBishop(int col, int row, Pieces king, int Kingcolumn, int Kingrow, int colvalue, int rowvalue) {
 		for(int i=1; i<8;++i) {
-			if(Kingcolumn - (i * colvalue) == col && Kingrow - (i * rowvalue) == row) {
+			if(Kingcolumn + (i * colvalue) == col && Kingrow + (i * rowvalue) == row) {
 				break;
 			}
 			
@@ -115,8 +118,34 @@ public class Checkscanner {
 	private boolean checkedbyPawn(Pieces p, Pieces k, int col, int row) {
 		return p!=null && !logic.sameTeam(p, k) && p.name.equals("Pawn");
 	}
-	
+	 public boolean isCurrentlyInCheck(boolean isWhite) {
+	        Pieces king = logic.findKing(isWhite);
+	        return isKingchecked(new Move(gameboard, king, king.columns, king.rows));
+	    }
 	public boolean GameisOver(Pieces king) {
-		return false;
+		List<Pieces> piecesCopy = new ArrayList<>(gameboard.pieceslist);
+	    for (Pieces piece : piecesCopy) {
+	        if (gameboard.logic.sameTeam(piece, king)) {
+	            gameboard.selectedPiece = piece == king ? king : null;
+	            for (int row = 0; row < gameboard.rows; row++) {
+	                for (int col = 0; col < gameboard.columns; col++) {
+	                    Move move = new Move(gameboard, piece, col, row);
+	                    if (gameboard.logic.isValidMove(move)) {
+	                        return false; 
+	                    }
+	                }
+	            }
+	        }
+	    }
+
+	    
+	    Move dummyMove = new Move(gameboard, king, king.columns, king.rows);
+	    if (isKingchecked(dummyMove)) {
+	        System.out.println("checkmate");
+	    } else {
+	        System.out.println("stalemate");
+	    }
+
+	    return true;
 	}
 }

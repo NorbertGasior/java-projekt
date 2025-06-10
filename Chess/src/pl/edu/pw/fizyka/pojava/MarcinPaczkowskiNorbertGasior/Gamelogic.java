@@ -1,8 +1,9 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,13 +18,17 @@ public class Gamelogic {
     public boolean checknotation =false;
     char s;
     String full = "";
+    private boolean isGameOver = false;
+    private boolean isWhiteTurn = true;
     public Gamelogic(Gameboard gameboard) {
         this.gameboard = gameboard;
         checkscanner= new Checkscanner(gameboard, this);
     }
     
     public boolean isValidMove(Move move) {
-    	
+    	if(isGameOver) {
+    		return false;
+    	}
     	if (sameTeam(move.piece, move.captured)) {
     	    return false;
     	}
@@ -44,6 +49,7 @@ public class Gamelogic {
     	undoSimulatedMove(move);
 
     	if (kingChecked) {
+    		
     	    ifkingchecked = true;
     	    return false;
     	} 
@@ -96,12 +102,32 @@ public class Gamelogic {
         if (clock != null) {
             clock.switchTurn();
         }
-    	
+    	isWhiteTurn = !isWhiteTurn;
     	move.piece.isFirstmove=false;
+    	
+    	//updateGameState();
     	//gameboard.rotatechessboard();
     }
     
-    private void MakeKingMove(Move move) {
+    public void updateGameState() {
+    	
+        Pieces king = findKing(isWhiteTurn);
+        if (checkscanner.GameisOver(king)) {
+        	
+            if (checkscanner.isCurrentlyInCheck(isWhiteTurn)) {
+            	clock.pause();
+                String message = isWhiteTurn ? "Czarny wygrywa " : "Biały wygrywa";
+                JOptionPane.showMessageDialog(null, message, "Koniec gry", JOptionPane.INFORMATION_MESSAGE);
+                
+            } else {
+            	clock.pause();
+                JOptionPane.showMessageDialog(null, "Pat! Remis.", "Koniec gry", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+        }
+    }
+   
+	private void MakeKingMove(Move move) {
     	if(Math.abs(move.piece.columns- move.newcolumns)==2) {
     		Pieces rook;
     		if(move.piece.columns < move.newcolumns) {
@@ -139,14 +165,14 @@ public class Gamelogic {
     		
     		Object[] options = {q, r, b, n};
             int choice = JOptionPane.showOptionDialog(
-                    null,                                 // Komponent nadrzędny (null = centrum ekranu)
-                    "Wybierz figurę:",             			// Wiadomość
-                    "Promocja figury",                        // Tytuł okna
-                    JOptionPane.DEFAULT_OPTION,           // Typ opcji
-                    JOptionPane.QUESTION_MESSAGE,         // Typ ikony
-                    null,                                 // Niestandardowa ikona (null = domyślna)
-                    options,                              // Tablica opcji
-                    options[0]                            // Opcja domyślna
+                    null,                                 
+                    "Wybierz figurę:",             			
+                    "Promocja figury",                       
+                    JOptionPane.DEFAULT_OPTION,           
+                    JOptionPane.QUESTION_MESSAGE,         
+                    null,                                 
+                    options,                              
+                    options[0]                            
             );
 
             if (choice >= 0) {

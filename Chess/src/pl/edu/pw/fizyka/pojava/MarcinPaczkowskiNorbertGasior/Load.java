@@ -1,4 +1,4 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +35,7 @@ public class Load extends MouseAdapter{
 			Move move = new Move(gameboard, gameboard.selectedPiece, colu, row);
 			if(gameboard.logic.isValidMove(move)) {
 				gameboard.logic.makeMove(move);
+				gameboard.logic.updateGameState();
 			}else {
 				gameboard.selectedPiece.xPos = gameboard.selectedPiece.columns * gameboard.SizeofTile;
 				gameboard.selectedPiece.yPos = gameboard.selectedPiece.rows * gameboard.SizeofTile;

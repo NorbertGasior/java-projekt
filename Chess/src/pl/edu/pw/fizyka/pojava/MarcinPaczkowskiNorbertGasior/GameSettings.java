@@ -1,4 +1,4 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import java.awt.Color;
 

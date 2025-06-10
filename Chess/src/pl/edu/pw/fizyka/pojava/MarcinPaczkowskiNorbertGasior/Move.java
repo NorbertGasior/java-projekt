@@ -1,4 +1,4 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 public class Move {
 	int oldcolumns;

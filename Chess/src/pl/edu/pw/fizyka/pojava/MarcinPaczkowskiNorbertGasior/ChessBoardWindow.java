@@ -1,4 +1,4 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class ChessBoardWindow extends JFrame {
 	int min, sec;
 	private ChessClock clock;
 	
-//chyba git funkcja
+
 	public ChessBoardWindow(GameSettings settings) {
 		setTitle("Plansza szachowa");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

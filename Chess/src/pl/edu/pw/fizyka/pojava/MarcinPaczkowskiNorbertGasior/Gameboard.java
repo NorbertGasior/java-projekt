@@ -1,4 +1,4 @@
-package Chess;
+package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -64,7 +64,7 @@ public class Gameboard extends JPanel {
         } else if (settings.getGameType() == GameType.CLASSIC) {
             initClassicPieces();
         } else if (settings.getGameType() == GameType.CAPABLANCA) {
-            // na razie używamy klasycznego układu dla Capablanki
+            
             initCapablancaPieces();
         }
     }

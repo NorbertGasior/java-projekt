@@ -15,6 +15,7 @@ public class King extends Pieces{
 		this.sprite = sheet.getSubimage(0, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
 	public boolean PiececanMove(int columns,int rows) {
+		
 		return canCastle(columns,rows)||(Math.abs(columns-this.columns)<2 && Math.abs(rows-this.rows)<2);
 	}
 	public boolean canCastle(int col, int row) {

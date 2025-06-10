@@ -15,7 +15,8 @@ public class Rook extends Pieces{
 		this.sprite = sheet.getSubimage(4*sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
 	public boolean PiececanMove(int columns, int rows) {
-		return !(columns!=this.columns && rows!=this.rows);
+		
+		return !(columns!=this.columns && rows!=this.rows)&& ((columns<gameboard.settings.getColumns())&&(columns>=0)&&(rows<8)&&(rows>=0));
 	}
 	public boolean isbetween(int columns, int rows) {
 		int minrow = Math.min(rows, this.rows);

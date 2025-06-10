@@ -33,7 +33,8 @@ public class Pieces {
 	public Pieces(Gameboard gameboard) {
 		this.gameboard = gameboard;
 	}
-	public boolean PiececanMove(int column, int row) {
+	public boolean PiececanMove(int columns, int rows) {
+		
 		return true;
 	}
 	public boolean isbetween(int column, int row) {

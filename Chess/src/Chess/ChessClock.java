@@ -14,13 +14,14 @@ public class ChessClock extends JPanel {
     
     private int timeWhite;           // pozostały czas białych
     private int timeBlack;           // pozostały czas czarnych
-    private boolean whiteTurn = true;
+    public boolean whiteTurn=true;
 
     private final JLabel labelWhite;
     private final JLabel labelBlack;
     private Timer timer;
 
     public ChessClock(Gameboard board) {
+    	
         this.initialTime = board.settings.getMinutes() * 60;
         this.increment   = board.settings.getIncrement();
         this.timeWhite   = initialTime;
@@ -38,7 +39,7 @@ public class ChessClock extends JPanel {
 
         // Timer co sekundę
         timer = new Timer(1000, (ActionEvent e) -> {
-            if (!board.logic.previousMove) {
+            if (whiteTurn) {
                 timeWhite--;
                 if (timeWhite <= 0) {
                     timer.stop();

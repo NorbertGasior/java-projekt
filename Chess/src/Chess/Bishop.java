@@ -15,7 +15,8 @@ public class Bishop extends Pieces{
 		this.sprite = sheet.getSubimage(2*sheetScale, isWhite ? 0 : sheetScale, sheetScale, sheetScale).getScaledInstance(gameboard.SizeofTile, gameboard.SizeofTile, BufferedImage.SCALE_SMOOTH);
 	}
 	public boolean PiececanMove(int columns, int rows) {
-		return (Math.abs(columns-this.columns)==Math.abs(rows-this.rows));
+		
+		return (Math.abs(columns-this.columns)==Math.abs(rows-this.rows))&& ((columns<gameboard.settings.getColumns())&&(columns>=0)&&(rows<8)&&(rows>=0));
 	}
 	public boolean isbetween(int columns, int rows) {
 		int col = this.columns;

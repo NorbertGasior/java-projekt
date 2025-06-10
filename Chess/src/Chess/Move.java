@@ -5,7 +5,7 @@ public class Move {
 	int oldrows;
 	int newcolumns;
 	int newrows;
-	final char[] Movenotation= {'a','b','c','d','e','f','g','h'};
+	final char[] Movenotation= {'a','b','c','d','e','f','g','h','x','+'};
 	Pieces piece;
 	Pieces captured;
 	public Move(Gameboard gameboard, Pieces piece, int newcol, int newrow) {

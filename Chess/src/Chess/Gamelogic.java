@@ -11,35 +11,43 @@ import javax.swing.JOptionPane;
 public class Gamelogic {
 	
     private Gameboard gameboard;
-    public boolean previousMove=false;
+    public boolean previousMove=true;
     Checkscanner checkscanner;
     public boolean ifkingchecked = false;
+    public boolean checknotation =false;
     char s;
     String full = "";
     public Gamelogic(Gameboard gameboard) {
         this.gameboard = gameboard;
         checkscanner= new Checkscanner(gameboard, this);
     }
+    
     public boolean isValidMove(Move move) {
-        if (sameTeam(move.piece, move.captured)) {
-            return false;
-        }
-        if(move.piece.isWhite==previousMove) {
-        	return false;
-        }
-        if(!move.piece.PiececanMove(move.newcolumns, move.newrows)) {
-        	
-        	return false;
-        }
-        if(move.piece.isbetween(move.newcolumns, move.newrows)) {
-        	return false;
-        }
-        if(checkscanner.isKingchecked(move)) {
-        	
-        	ifkingchecked = true;
-        	return false;
-        }
-        return true;   
+    	
+    	if (sameTeam(move.piece, move.captured)) {
+    	    return false;
+    	}
+    	if (move.piece.isWhite != previousMove) {
+    	    return false;
+    	}
+    	if (!move.piece.PiececanMove(move.newcolumns, move.newrows)) {
+    	    return false;
+    	}
+    	if (move.piece.isbetween(move.newcolumns, move.newrows)) {
+    	    return false;
+    	}
+
+    	// --- KLUCZOWA CZĘŚĆ:
+    	
+    	simulateMove(move);
+    	boolean kingChecked = checkscanner.isKingchecked(move);
+    	undoSimulatedMove(move);
+
+    	if (kingChecked) {
+    	    ifkingchecked = true;
+    	    return false;
+    	} 
+    	return true;
     }
     
     Pieces findKing(boolean isWhite) {
@@ -52,10 +60,10 @@ public class Gamelogic {
     }
     
     public void makeMove(Move move) {
+    	
     	if(move.piece.name.equals("Pawn")) {
     		MakePawnMove(move);
     		char s = move.Movenotation[move.newcolumns];
-    		System.out.println(s +""+(8- move.newrows));
     		
     	}else if(move.piece.name.equals("King")){
     		MakeKingMove(move);
@@ -66,8 +74,16 @@ public class Gamelogic {
     	else if(move.piece.name.equals("Rook"))s='R';
     	else if(move.piece.name.equals("Bishop"))s='B';
     	full+=s;
+    	if(move.captured!=null) {
+    		full+=move.Movenotation[8];
+    	}
     	full+=move.Movenotation[move.newcolumns];
-    	System.out.println(full +""+(8- move.newrows));
+    	if(ifkingchecked)
+    		System.out.println(full +""+(8- move.newrows)+""+move.Movenotation[9]+ifkingchecked);
+    	else
+    		System.out.println(full +""+(8- move.newrows)+checkscanner.isKingchecked(move));
+    	s = ' ';
+    	full = "";
         move.piece.columns = move.newcolumns;
         move.piece.rows = move.newrows;
         move.piece.xPos = move.newcolumns * gameboard.SizeofTile;
@@ -76,7 +92,10 @@ public class Gamelogic {
         else previousMove = false;
         capture(move);
         move.piece.alreadymoved=true;
-    	
+     // sterowanie zegarem
+        if (clock != null) {
+            clock.switchTurn();
+        }
     	
     	move.piece.isFirstmove=false;
     	//gameboard.rotatechessboard();
@@ -94,10 +113,7 @@ public class Gamelogic {
     		}
     		rook.xPos=rook.columns*gameboard.SizeofTile;
     	}
-    	// sterowanie zegarem
-        if (clock != null) {
-            clock.switchTurn();
-        }
+    	
     }
     private void MakePawnMove(Move move) {
     	
@@ -142,6 +158,7 @@ public class Gamelogic {
                     default -> "Nieznana figura";
                 };
                 JOptionPane.showMessageDialog(null, "Wybrałeś: " + pieceName);
+                
                 if(pieceName.equals("Hetman")) {
                 	capture(move);
                 	move.captured = move.piece;
@@ -171,10 +188,24 @@ public class Gamelogic {
             }
             
     	}
-    	 
-         capture(move);
-         move.piece.alreadymoved=true;
+    	
+         
+         
 	}
+    public void simulateMove(Move move) {
+        move.captured = gameboard.getPiece(move.newcolumns, move.newrows);
+        gameboard.setPiece(null, move.piece.rows, move.piece.columns);
+        gameboard.setPiece(move.piece, move.newrows, move.newcolumns);
+        move.piece.columns = move.newcolumns;
+        move.piece.rows = move.newrows;
+    }
+
+    public void undoSimulatedMove(Move move) {
+        gameboard.setPiece(move.captured, move.newrows, move.newcolumns);
+        gameboard.setPiece(move.piece, move.oldrows, move.oldcolumns);
+        move.piece.columns = move.oldcolumns;
+        move.piece.rows = move.oldrows;
+    }
 	public void capture(Move move) {
     	
         gameboard.pieceslist.remove(move.captured);

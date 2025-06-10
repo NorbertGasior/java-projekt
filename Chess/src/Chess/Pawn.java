@@ -16,65 +16,26 @@ public class Pawn extends Pieces{
 	}
 	public boolean PiececanMove(int columns, int rows) {
 		
-			if(isWhite) {
-				if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns-1 && rows == this.rows-1 && gameboard.getPiece(columns, rows+1)!=null) {
-					return true;
-				}
-				if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns+1 && rows == this.rows-1 && gameboard.getPiece(columns, rows+1)!=null) {
-					return true;
-				}
-				if(this.rows - rows >2 || this.rows - rows <1) {
-					return false;
-				}
-				if(this.rows - rows == 2 && alreadymoved) {
-					return false;
-				}
-				if(gameboard.getPiece(columns, rows)!=null && this.columns - columns==0) {
-					return false;
-				}
-				if(Math.abs(this.columns -columns)>1 || (Math.abs(this.columns -columns)==1 && Math.abs(rows- this.rows)==2)) {
-					return false;
-				}
-				if(Math.abs(this.columns -columns)==1 &&gameboard.getPiece(columns, rows)==null) {
-					return false;
-				}
-				
+			int colorindex = isWhite ? 1 : -1;
+			if(this.columns == columns && rows == this.rows - colorindex && gameboard.getPiece(columns, rows)==null) {
+				return true;
 			}
-			if(!isWhite) {
-				if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns-1 && rows == this.rows+1 && gameboard.getPiece(columns, rows-1)!=null) {
-					return true;
-				}
-				if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns+1 && rows == this.rows+1 && gameboard.getPiece(columns, rows-1)!=null) {
-					return true;
-				}
-				if(rows - this.rows >2 || rows - this.rows <1) {
-					return false;
-				}
-				if(rows - this.rows == 2 && alreadymoved) {
-					return false;
-				}
-				if(gameboard.getPiece(columns, rows)!=null && this.columns - columns==0) {
-					return false;
-				}
-				if(Math.abs(this.columns -columns)>1 || (Math.abs(this.columns -columns)==1 && Math.abs(rows- this.rows)==2)) {
-					return false;
-				}
-				if(Math.abs(this.columns -columns)==1 &&gameboard.getPiece(columns, rows)==null) {
-					return false;
-				}
-				
+			if(isFirstmove && this.columns == columns && rows == this.rows -colorindex*2 && gameboard.getPiece(columns, rows) ==null && gameboard.getPiece(columns, rows + colorindex)==null ) {
+				return true;
 			}
-		
-		return true;
-		
+			if(columns == this.columns -1 && rows == this.rows - colorindex && gameboard.getPiece(columns, rows)!=null) {
+				return true;
+			}
+			if(columns == this.columns +1 && rows == this.rows - colorindex && gameboard.getPiece(columns, rows)!=null) {
+				return true;
+			}
+			if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns-1 && rows == this.rows - colorindex && gameboard.getPiece(columns, rows+colorindex)!=null) {
+				return true;
+			}
+			if(gameboard.getTileValue(columns, rows)==gameboard.Enpassant && columns == this.columns+1 && rows == this.rows - colorindex && gameboard.getPiece(columns, rows+colorindex)!=null) {
+				return true;
+			}
+			return false;
 	}
-	public boolean isbetween(int columns, int rows) {
-    	if(Math.abs(rows-this.rows)==2) {
-    		int row = Math.min(rows, this.rows);
-    		if(gameboard.getPiece(this.columns, row+1)!=null) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
+	
 }

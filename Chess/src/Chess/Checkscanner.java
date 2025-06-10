@@ -108,8 +108,8 @@ public class Checkscanner {
 	
 	private boolean hitbyPawn(int col, int row, Pieces king, int Kingcolumn, int Kingrow) {
 		int colorval = king.isWhite ? 1 : -1;
-		return checkedbyPawn(gameboard.getPiece(Kingcolumn+1, Kingrow+colorval),king,col,row)||
-				checkedbyPawn(gameboard.getPiece(Kingcolumn-1, Kingrow+colorval),king,col,row);
+		return checkedbyPawn(gameboard.getPiece(Kingcolumn+1, Kingrow-colorval),king,col,row)||
+				checkedbyPawn(gameboard.getPiece(Kingcolumn-1, Kingrow-colorval),king,col,row);
 	}
 	
 	private boolean checkedbyPawn(Pieces p, Pieces k, int col, int row) {

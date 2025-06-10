@@ -65,7 +65,7 @@ public class Gameboard extends JPanel {
             initClassicPieces();
         } else if (settings.getGameType() == GameType.CAPABLANCA) {
             // na razie używamy klasycznego układu dla Capablanki
-            initClassicPieces();
+            initCapablancaPieces();
         }
     }
 
@@ -161,6 +161,52 @@ public class Gameboard extends JPanel {
                 case 3: pieceslist.add(new Queen(this, 7, col, true)); break;
                 case 4: pieceslist.add(new King(this, 7, col, true)); break;
             }
+        }
+    }
+    private void initCapablancaPieces() {
+        // czarne figury
+        pieceslist.add(new Rook(this, 0, 0, false));
+        pieceslist.add(new Knight(this, 0, 1, false));
+        pieceslist.add(new Archbishop(this, 0, 2, false));
+        pieceslist.add(new Bishop(this, 0, 3, false));
+        pieceslist.add(new Queen(this, 0, 4, false));
+        pieceslist.add(new King(this, 0, 5, false));
+        pieceslist.add(new Bishop(this, 0, 6, false));
+        pieceslist.add(new Chancellor(this, 0, 7, false));
+        pieceslist.add(new Knight(this, 0, 8, false));
+        pieceslist.add(new Rook(this, 0, 9, false));
+        // czarne piony
+        for (int col = 0; col < 10; col++) {
+            pieceslist.add(new Pawn(this, 1, col, false));
+        }
+        // białe piony
+        for (int col = 0; col < 10; col++) {
+            pieceslist.add(new Pawn(this, 6, col, true));
+        }
+        // białe figury
+        pieceslist.add(new Rook(this, 7, 0, true));
+        pieceslist.add(new Knight(this, 7, 1, true));
+        pieceslist.add(new Archbishop(this, 7, 2, true));
+        pieceslist.add(new Bishop(this, 7, 3, true));
+        pieceslist.add(new Queen(this, 7, 4, true));
+        pieceslist.add(new King(this, 7, 5, true));
+        pieceslist.add(new Bishop(this, 7, 6, true));
+        pieceslist.add(new Chancellor(this, 7, 7, true));
+        pieceslist.add(new Knight(this, 7, 8, true));
+        pieceslist.add(new Rook(this, 7, 9, true));
+    }
+    public void setPiece(Pieces newPiece, int row, int col) {
+        Pieces existing = getPiece(col, row);
+        if (existing != null) {
+            pieceslist.remove(existing);
+        }
+
+        if (newPiece != null) {
+            newPiece.rows = row;
+            newPiece.columns = col;
+            newPiece.xPos = col * SizeofTile;
+            newPiece.yPos = row * SizeofTile;
+            pieceslist.add(newPiece);
         }
     }
     public void rotatechessboard() {

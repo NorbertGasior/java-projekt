@@ -27,18 +27,34 @@ public class Load extends MouseAdapter{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
-		int colu = e.getX()/gameboard.SizeofTile;
-		int row = e.getY()/gameboard.SizeofTile;
-		
-		if(gameboard.selectedPiece != null) {
-			Move move = new Move(gameboard, gameboard.selectedPiece, colu, row);
-			if(gameboard.logic.isValidMove(move)) {
-				gameboard.logic.makeMove(move);
-				gameboard.logic.updateGameState();
-			}else {
-				gameboard.selectedPiece.xPos = gameboard.selectedPiece.columns * gameboard.SizeofTile;
-				gameboard.selectedPiece.yPos = gameboard.selectedPiece.rows * gameboard.SizeofTile;
+		if(gameboard.settings.isPvP()==true) {
+			int colu = e.getX()/gameboard.SizeofTile;
+			int row = e.getY()/gameboard.SizeofTile;
+			
+			if(gameboard.selectedPiece != null) {
+				Move move = new Move(gameboard, gameboard.selectedPiece, colu, row);
+				if(gameboard.logic.isValidMove(move)) {
+					gameboard.logic.makeMove(move);
+					gameboard.logic.updateGameState();
+				}else {
+					gameboard.selectedPiece.xPos = gameboard.selectedPiece.columns * gameboard.SizeofTile;
+					gameboard.selectedPiece.yPos = gameboard.selectedPiece.rows * gameboard.SizeofTile;
+				}
+			}
+		}else {
+			int colu = e.getX()/gameboard.SizeofTile;
+			int row = e.getY()/gameboard.SizeofTile;
+			
+			if(gameboard.selectedPiece != null) {
+				Move move = new Move(gameboard, gameboard.selectedPiece, colu, row);
+				if(gameboard.logic.isValidMove(move)) {
+					gameboard.logic.makeMove(move);
+					gameboard.logic.updateGameState();
+					gameboard.logic.makeMove(gameboard.logic.AImove());
+				}else {
+					gameboard.selectedPiece.xPos = gameboard.selectedPiece.columns * gameboard.SizeofTile;
+					gameboard.selectedPiece.yPos = gameboard.selectedPiece.rows * gameboard.SizeofTile;
+				}
 			}
 		}
 		gameboard.selectedPiece = null;

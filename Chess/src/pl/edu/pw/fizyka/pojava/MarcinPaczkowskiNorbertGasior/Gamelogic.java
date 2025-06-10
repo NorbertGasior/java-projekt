@@ -2,7 +2,10 @@ package pl.edu.pw.fizyka.pojava.MarcinPaczkowskiNorbertGasior;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 
 import javax.swing.JButton;
@@ -105,7 +108,7 @@ public class Gamelogic {
     	isWhiteTurn = !isWhiteTurn;
     	move.piece.isFirstmove=false;
     	
-    	//updateGameState();
+    	
     	//gameboard.rotatechessboard();
     }
     
@@ -246,6 +249,35 @@ public class Gamelogic {
 
     public void setClock(ChessClock clock) {
         this.clock = clock;
+    }
+   
+    	
+    
+    public Move AImove() {
+    	List<Move> PossibleMoves = new ArrayList<>();
+    	int AiPieceMoves=0;
+    	List<Pieces> copycat = new ArrayList<>(gameboard.pieceslist);
+    	for(Pieces piece : copycat) {
+    		if(piece.isWhite==false) {
+    			for(int row=0;row<gameboard.settings.getRows();row++) {
+    				for(int col=0;col<gameboard.settings.getRows();col++) {
+    					if(isValidMove(new Move(gameboard,piece,col,row))) {
+    						PossibleMoves.add(new Move(gameboard,piece,col,row));
+    		    			AiPieceMoves++;
+    					}
+        			}
+    			}
+    			
+    		}
+    	}
+    	if(AiPieceMoves!=0) {
+    		Random random = new Random();
+        	int AIChoice = random.nextInt(AiPieceMoves);
+        	return PossibleMoves.get(AIChoice);
+    	}
+    	
+    	return null;
+    	
     }
     
 }
